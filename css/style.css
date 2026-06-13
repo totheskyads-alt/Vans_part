@@ -1097,3 +1097,10 @@ body::before {
   /* --- General tap targets --- */
   a.btn, button.btn { min-height: 44px; }
 }
+
+/* ===== Accessibility & anti-bot helpers (backend finalization) ===== */
+/* Honeypot field — visually hidden, catches bots, never shown to users */
+.hp-field{position:absolute !important;left:-9999px !important;top:auto;width:1px;height:1px;overflow:hidden;}
+/* Skip-to-content link — hidden until keyboard focus */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:100000;background:#F5C518;color:#000;padding:10px 18px;font-weight:700;border-radius:0 0 6px 0;text-decoration:none;}
+.skip-link:focus{left:0;}

@@ -7,8 +7,22 @@
     localStorage.setItem(CONSENT_KEY, localStorage.getItem('cookieConsent'));
   }
 
-  // Already consented — don't show banner
-  if (localStorage.getItem(CONSENT_KEY)) return;
+  // Push consent choice to Google Consent Mode v2
+  function applyConsent(consent) {
+    var granted = (consent === 'accepted');
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', {
+        'ad_storage':         granted ? 'granted' : 'denied',
+        'analytics_storage':  granted ? 'granted' : 'denied',
+        'ad_user_data':       granted ? 'granted' : 'denied',
+        'ad_personalization': granted ? 'granted' : 'denied'
+      });
+    }
+  }
+
+  // Already consented — apply stored choice to Consent Mode, don't show banner
+  var storedConsent = localStorage.getItem(CONSENT_KEY);
+  if (storedConsent) { applyConsent(storedConsent); return; }
 
   /* ---- Build banner ---- */
   var banner = document.createElement('div');
@@ -48,6 +62,7 @@
   /* ---- Dismiss helper ---- */
   function dismiss(consent) {
     localStorage.setItem(CONSENT_KEY, consent);
+    applyConsent(consent);
     banner.style.transform = 'translateY(100%)';
     banner.style.opacity   = '0';
     setTimeout(function () {

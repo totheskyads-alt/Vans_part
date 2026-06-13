@@ -1,0 +1,8 @@
+# OS / editor junk
+.DS_Store
+.thumbnail
+Thumbs.db
+*.tmp
+
+# Dependencies (dacă vor apărea în viitor)
+node_modules/
